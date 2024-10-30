@@ -1,0 +1,12 @@
+---
+lang: en
+id: cjk-radicals
+url: /transliterators/cjk-radicals/
+---
+# CJK radicals transliterator
+
+| Original codepoint | Original character name | Original character | Substitute codepoint | Substitute character name | Substitute chracter |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in cjkRadicals -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}
