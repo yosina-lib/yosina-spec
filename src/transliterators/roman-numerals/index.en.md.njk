@@ -1,0 +1,15 @@
+---
+lang: en
+id: roman-numerals
+url: /transliterators/roman-numerals/
+title: Roman numerals transliterator
+---
+# Roman numerals transliterator
+
+This transliterator converts Roman numeral characters to their decomposed ASCII equivalents. It handles both uppercase and lowercase Roman numerals from I to M (1 to 1000), including special values like L (50), C (100), and D (500).
+
+| Value | Uppercase | Uppercase character | Lowercase | Lowercase character | ASCII uppercase | ASCII lowercase |
+| --- | --- | --- | --- | --- | --- | --- |
+{% for entry in romanNumerals -%}
+| {{ entry.value }} | {{ entry.codes.upper }} | ![size=24](/assets/img/genglyphsvg/{{ entry.codes.upper.replace('+', '')|lower }}.svg) | {{ entry.codes.lower }} | ![size=24](/assets/img/genglyphsvg/{{ entry.codes.lower.replace('+', '')|lower }}.svg) | {{ entry.decomposed.upper|codepointsToString }} | {{ entry.decomposed.lower|codepointsToString }} |
+{% endfor %}

@@ -1,0 +1,15 @@
+---
+lang: en
+id: mathematical-alphanumerics
+url: /transliterators/mathematical-alphanumerics/
+title: Mathematical alphanumerics transliterator
+---
+# Mathematical alphanumerics transliterator
+
+This transliterator performs transliteration from mathematical alphanumeric symbols to their basic form of characters between U+0030 and U+007E. Mathematical alphanumeric symbols are a set of characters that are used in mathematical notation, such as bold, italic, and script letters, as well as numbers.
+
+| Original codepoint | Original character name | Original character | Substitute codepoint | Substitute character name | Substitute chracter |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in mathematicalAlphanumerics -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}

@@ -1,0 +1,32 @@
+---
+lang: en
+id: combined-chars
+url: /transliterators/combined-chars/
+title: Combined characters transliterator
+---
+# Combined characters transliterator
+
+The Combined characters transliterator decomposes single Unicode characters that represent combinations of multiple characters into their constituent parts. This is useful for text normalization and compatibility with systems that may not support these precomposed characters.
+
+## Overview
+
+This transliterator handles several categories of combined characters:
+- **Symbol combinations**: Trademark (™), service mark (℠), telephone (℡), and other symbols that combine multiple letters
+- **Fractions**: Vulgar fractions like ⅐, ⅑, ⅒, ⅓, ⅔, etc.
+- **Control character symbols**: Visual representations of ASCII control characters (NUL, SOH, STX, etc.)
+- **Parenthesized characters**: Numbers and letters in parentheses like ⑴, ⑵, (a), (b), etc.
+- **Japanese era names**: Combined characters for Japanese era names (㍻ for 平成, ㍼ for 昭和, etc.)
+- **Katakana word combinations**: Common katakana combinations like ㌀ (アパート), ㌁ (アルファ), etc.
+- **Units of measurement**: Combined unit symbols like ㌃ (アール), ㌔ (キロ), ㌧ (トン), etc.
+- **Scientific units**: Complex units like ㎐ (Hz), ㎑ (kHz), ㎩ (Pa), etc.
+- **Date representations**: Japanese date formats combining numbers with 月 or 日
+
+Each combined character is replaced with its individual components, making the text more universally compatible while preserving the original meaning.
+
+## Character Mapping Table
+
+| Original codepoint | Original character name | Original character | Substitute |
+| --- | --- | --- | --- |
+{% for k, v in combinedChars -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} |
+{% endfor %}

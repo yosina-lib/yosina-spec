@@ -1,0 +1,22 @@
+{
+  "lang": "en",
+  "metas": {
+    "title": "=title",
+    "site": "Yosina Project",
+    "lang": "en",
+    "description": "=description"
+  },
+  "top_links": [
+    {
+      "icon": "fab fa-github",
+      "title": "GitHub Repository",
+      "url": "https://github.com/yosina-lib/yosina"
+    }
+  ],
+  "nav_links": [
+    {
+      "title": "GitHub Repository",
+      "url": "https://github.com/yosina-lib/yosina"
+    }
+  ]
+}

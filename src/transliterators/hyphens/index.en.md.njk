@@ -1,0 +1,43 @@
+---
+lang: en
+id: hyphens
+url: /transliterators/hyphens/
+title: Hyphens transliterator
+---
+# Hyphens transliterator
+
+The Hyphens transliterator is designed to normalize various hyphen-like characters and related symbols to their more common counterparts found in JIS X 0201 or JIS X 0208 character sets. This is particularly useful for text processing in Japanese computing environments where character encoding compatibility is important.
+
+## Overview
+
+This transliterator handles a wide range of characters including:
+- Various forms of hyphens and dashes (hyphen, en dash, em dash, etc.)
+- Tilde and wave dash characters
+- Vertical bar variations
+- Special punctuation marks
+- Currency symbols (cent sign, pound sign)
+- Katakana middle dot and prolonged sound mark
+
+## Mapping Precedence
+
+The transliterator supports multiple mapping modes with configurable precedence. Each mapping mode corresponds to specific columns in the character mapping table below:
+
+- **ascii**: Maps to basic ASCII characters (7-bit) → "ASCII substitute codepoint" and "ASCII substition character" columns
+- **jisx0201**: Maps to JIS X 0201 (8-bit) characters → "JIS X 0201 substitute codepoint" and "JIS X 0201 substitute character" columns
+- **jisx0208_90**: Maps to JIS X 0208:1990 characters (default) → "JIS X 0208-1978 substitute codepoint" and "JIS X 0208-1978 substitute character" columns
+- **jisx0208_90_windows**: Maps to Windows-specific JIS X 0208:1990 variants → "JIS X 0208-1978 substitute (Windows)" and "JIS X 0208-1978 substitute (Windows) character" columns
+- **jisx0208_verbatim**: Preserves the original JIS X 0208 character when possible → "JIS X 0208 verbatim substitute" and "JIS X 0208 verbatim substitute character" columns
+
+The transliterator can apply multiple mappings in a layered manner using the `precedence` option. When processing a character, it checks each mapping in the order specified by the precedence array. The first available mapping found for the character is used. This allows you to create fallback chains, for example, preferring JIS X 0208 mappings but falling back to JIS X 0201 or ASCII when necessary.
+
+By default, the transliterator uses `["jisx0208_90"]` as the precedence. You can customize this to create more complex mapping strategies, such as `["jisx0208_90_windows", "jisx0201", "ascii"]` to provide multiple fallback options.
+
+## Character Mapping Table
+
+The following table shows all characters handled by this transliterator and their mappings across different modes:
+
+| Original codepoint | Original character name | Original character | ASCII substitute codepoint | ASCII substition character | JIS X 0201 substitute codepoint | JIS X 0201 substitute character | JIS X 0208-1978 substitute codepoint | JIS X 0208-1978 substitute character | JIS X 0208-1978 substitute (Windows) | JIS X 0208-1978 substitute (Windows) character | JIS X 0208 verbatim substitute | JIS X 0208 verbatim substitute character |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+{% for entry in hyphens -%}
+| {{ entry.code }} | {{ unicodeNames.get(entry.code|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ entry.code.replace('+', '')|lower }}.svg) | {% if entry.ascii %}{{ entry.ascii|join(' ') }}{% endif %} | {% if entry.ascii %}{% for cp in entry.ascii %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry.jisx0201 %}{{ entry.jisx0201|join(' ') }}{% endif %} | {% if entry.jisx0201 %}{% for cp in entry.jisx0201 %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-1978'] %}{{ entry['jisx0208-1978']|join(' ') }}{% endif %} | {% if entry['jisx0208-1978'] %}{% for cp in entry['jisx0208-1978'] %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-1978-windows'] %}{{ entry['jisx0208-1978-windows']|join(' ') }}{% endif %} | {% if entry['jisx0208-1978-windows'] %}{% for cp in entry['jisx0208-1978-windows'] %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-verbatim'] %}{{ entry['jisx0208-verbatim'] }}{% endif %} | {% if entry['jisx0208-verbatim'] %}![size=24](/assets/img/genglyphsvg/{{ entry['jisx0208-verbatim'].replace('+', '')|lower }}.svg){% endif %} |
+{% endfor %}

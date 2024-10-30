@@ -1,0 +1,9 @@
+_site
+_cache
+.venv
+
+.DS_Store
+Thumbs.db
+
+target
+tmp

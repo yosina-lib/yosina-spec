@@ -1,0 +1,23 @@
+{
+  "imports": {
+    "@types/node": "npm:@types/node@^24.0.12",
+    "@unicode/unicode-16.0.0": "npm:@unicode/unicode-16.0.0@^1.6.6",
+    "@zip-js/zip-js": "jsr:@zip-js/zip-js@^2.7.63",
+    "markdown-it": "npm:@types/markdown-it@14.1.0",
+    "lume/": "https://deno.land/x/lume@v3.0.9/",
+    "wiki/": "https://deno.land/x/lume_theme_simple_wiki@v0.14.3/",
+    "@tools/": "./src/tools/"
+  },
+  "tasks": {
+    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
+    "genmarkdown": "deno --allow-env --allow-read --allow-write scripts/genmarkdown.ts",
+    "downloadfonts": "deno --allow-net --allow-env --allow-read --allow-write scripts/downloadfonts.ts",
+    "build": "deno task lume",
+    "serve": "deno task lume -s"
+  },
+  "compilerOptions": {
+    "types": [
+      "lume/types.ts"
+    ]
+  }
+}

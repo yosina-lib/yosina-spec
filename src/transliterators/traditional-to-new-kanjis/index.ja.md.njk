@@ -1,0 +1,15 @@
+---
+lang: ja
+id: traditional-to-new-kanjis
+url: /transliterators/traditional-to-new-kanjis/
+title: 旧字体から新字体への漢字トランスリテレータ
+---
+# 旧字体から新字体への漢字トランスリテレータ
+
+このトランスリテレータは、旧字体から新字体への翻字を行います。IVS (Ideographic Variation Sequence) またはSVS (Standardized Variation Sequence) を持つ文字が準拠するIVD (表意文字異体字データベース) はAdobe-Japan1です。
+
+| 元のコードポイント (IVS) | 元の文字名 (IVS) | 元の文字 (IVS) | 置換後のコードポイント | 置換後の文字名 | 置換後の文字 |
+| --- | --- | --- | --- | --- | --- |
+{% for pair in traditionalToNewKanjis -%}
+| {{ pair[0].base or (pair[0].ivs|join(' ')) }} | {{ unicodeNames.get((pair[0].base or pair[0].ivs[0])|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ (pair[0].base or pair[0].ivs)|buildFilename }}.svg) | {{ pair[1].base or (pair[1].ivs|join(' ')) }} | {{ unicodeNames.get(pair[1].ivs[0]|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ (pair[1].base or pair[1].ivs)|buildFilename }}.svg) |
+{% endfor %}

@@ -1,0 +1,15 @@
+---
+lang: ja
+id: roman-numerals
+url: /transliterators/roman-numerals/
+title: ローマ数字トランスリテレータ
+---
+# ローマ数字トランスリテレータ
+
+このトランスリテレータは、ローマ数字文字を分解されたASCII相当文字に変換します。I から M (1 から 1000) までの大文字と小文字のローマ数字を扱い、L (50)、C (100)、D (500) などの特別な値も含みます。
+
+| 値 | 大文字 | 大文字文字 | 小文字 | 小文字文字 | ASCII大文字 | ASCII小文字 |
+| --- | --- | --- | --- | --- | --- | --- |
+{% for entry in romanNumerals -%}
+| {{ entry.value }} | {{ entry.codes.upper }} | ![size=24](/assets/img/genglyphsvg/{{ entry.codes.upper.replace('+', '')|lower }}.svg) | {{ entry.codes.lower }} | ![size=24](/assets/img/genglyphsvg/{{ entry.codes.lower.replace('+', '')|lower }}.svg) | {{ entry.decomposed.upper|codepointsToString }} | {{ entry.decomposed.lower|codepointsToString }} |
+{% endfor %}

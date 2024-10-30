@@ -1,0 +1,15 @@
+---
+lang: ja
+id: mathematical-alphanumerics
+url: /transliterators/mathematical-alphanumerics/
+title: 数学用英数記号トランスリテレータ
+---
+# 数学用英数記号トランスリテレータ
+
+このトランスリテレータは、数学用英数記号をU+0030からU+007Eまでの基本形の文字に翻字します。数学用英数記号は、太字、斜体、筆記体の文字や数字など、数学的記法で使用される文字のセットです。
+
+| 元のコードポイント | 元の文字名 | 元の文字 | 置換後のコードポイント | 置換後の文字名 | 置換後の文字 |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in mathematicalAlphanumerics -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}

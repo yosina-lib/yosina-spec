@@ -1,0 +1,15 @@
+---
+lang: en
+id: ideographic-annotations
+url: /transliterators/ideographic-annotations/
+title: Ideographic annotatinos transliterator
+---
+# Ideographic annotatinos transliterator
+
+Ideographic annotations are devised in ancient Japan to help readers quickly read chinese texts. They are usually placed aside the original characters to indicate the order of reading so that the reader can read the text as if it were written in Japanese. While the annotations are ordinary kanjis, they have different codepoints in Unicode than the corresponding CJK ideographs.
+
+| Original codepoint | Original character name | Original character | Substitute codepoint | Substitute character name | Substitute chracter |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in ideographicAnnotationMarks -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}

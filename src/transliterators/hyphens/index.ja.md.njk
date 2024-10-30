@@ -1,0 +1,43 @@
+---
+lang: ja
+id: hyphens
+url: /transliterators/hyphens/
+title: ハイフントランスリテレータ
+---
+# ハイフントランスリテレータ
+
+ハイフントランスリテレータは、様々なハイフン類似文字や関連記号を、JIS X 0201またはJIS X 0208文字セットに含まれるより一般的な対応文字に正規化するために設計されています。これは、文字エンコーディングの互換性が重要な日本のコンピューティング環境でのテキスト処理に特に有用です。
+
+## 概要
+
+このトランスリテレータは以下のような幅広い文字を処理します：
+- 各種ハイフンとダッシュ（ハイフン、エンダッシュ、エムダッシュなど）
+- チルダと波ダッシュ文字
+- 縦棒のバリエーション
+- 特殊な句読点
+- 通貨記号（セント記号、ポンド記号）
+- カタカナ中黒と長音記号
+
+## マッピングの優先順位
+
+トランスリテレータは設定可能な優先順位で複数のマッピングモードをサポートしています。各マッピングモードは、下記の文字マッピング表の特定の列に対応します：
+
+- **ascii**: 基本的なASCII文字（7ビット）にマッピング → 「ASCII置換コードポイント」および「ASCII置換文字」列
+- **jisx0201**: JIS X 0201（8ビット）文字にマッピング → 「JIS X 0201置換コードポイント」および「JIS X 0201置換文字」列
+- **jisx0208_90**: JIS X 0208:1990文字にマッピング（デフォルト） → 「JIS X 0208-1978置換コードポイント」および「JIS X 0208-1978置換文字」列
+- **jisx0208_90_windows**: Windows固有のJIS X 0208:1990バリアントにマッピング → 「JIS X 0208-1978置換（Windows）」および「JIS X 0208-1978置換（Windows）文字」列
+- **jisx0208_verbatim**: 可能な場合は元のJIS X 0208文字を保持 → 「JIS X 0208逐語的置換」および「JIS X 0208逐語的置換文字」列
+
+トランスリテレータは `precedence` オプションを使用して、複数のマッピングを階層的に適用できます。文字を処理する際、優先順位配列で指定された順序で各マッピングをチェックし、その文字に対して最初に利用可能なマッピングが使用されます。これにより、フォールバックチェーンを作成できます。例えば、JIS X 0208マッピングを優先しつつ、必要に応じてJIS X 0201やASCIIにフォールバックすることができます。
+
+デフォルトでは、トランスリテレータは `["jisx0208_90"]` を優先順位として使用します。これをカスタマイズして、`["jisx0208_90_windows", "jisx0201", "ascii"]` のような、複数のフォールバックオプションを提供するより複雑なマッピング戦略を作成できます。
+
+## 文字マッピング表
+
+以下の表は、このトランスリテレータが処理するすべての文字と、異なるモードでのマッピングを示しています：
+
+| 元のコードポイント | 元の文字名 | 元の文字 | ASCII置換コードポイント | ASCII置換文字 | JIS X 0201置換コードポイント | JIS X 0201置換文字 | JIS X 0208-1978置換コードポイント | JIS X 0208-1978置換文字 | JIS X 0208-1978置換（Windows） | JIS X 0208-1978置換（Windows）文字 | JIS X 0208逐語的置換 | JIS X 0208逐語的置換文字 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+{% for entry in hyphens -%}
+| {{ entry.code }} | {{ unicodeNames.get(entry.code|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ entry.code.replace('+', '')|lower }}.svg) | {% if entry.ascii %}{{ entry.ascii|join(' ') }}{% endif %} | {% if entry.ascii %}{% for cp in entry.ascii %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry.jisx0201 %}{{ entry.jisx0201|join(' ') }}{% endif %} | {% if entry.jisx0201 %}{% for cp in entry.jisx0201 %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-1978'] %}{{ entry['jisx0208-1978']|join(' ') }}{% endif %} | {% if entry['jisx0208-1978'] %}{% for cp in entry['jisx0208-1978'] %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-1978-windows'] %}{{ entry['jisx0208-1978-windows']|join(' ') }}{% endif %} | {% if entry['jisx0208-1978-windows'] %}{% for cp in entry['jisx0208-1978-windows'] %}![size=24](/assets/img/genglyphsvg/{{ cp.replace('+', '')|lower }}.svg) {% endfor %}{% endif %} | {% if entry['jisx0208-verbatim'] %}{{ entry['jisx0208-verbatim'] }}{% endif %} | {% if entry['jisx0208-verbatim'] %}![size=24](/assets/img/genglyphsvg/{{ entry['jisx0208-verbatim'].replace('+', '')|lower }}.svg){% endif %} |
+{% endfor %}

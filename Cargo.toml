@@ -1,0 +1,15 @@
+[package]
+name = "yosina-spec"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.98"
+clap = { version = "4.5.40", features = ["derive"] }
+read-fonts = "0.35.0"
+skrifa = "0.37.0"
+svg = "0.18.0"
+
+[[bin]]
+name = "genglyphsvg"
+path = "src/tools/genglyphsvg/main.rs"

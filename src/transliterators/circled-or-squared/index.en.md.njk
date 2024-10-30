@@ -1,0 +1,40 @@
+---
+lang: en
+id: circled-or-squared
+url: /transliterators/circled-or-squared/
+title: Circled or squared characters transliterator
+---
+# Circled or squared characters transliterator
+
+The Circled or squared characters transliterator converts Unicode characters that appear inside circles or squares into configurable template representations. This is useful for converting decorative or special-purpose characters into more standard text formats while preserving their semantic meaning.
+
+## Overview
+
+This transliterator handles a wide variety of enclosed characters:
+- **Circled numbers**: ① ② ③ etc. (including double-digit numbers up to 50)
+- **Circled letters**: Ⓐ Ⓑ Ⓒ (uppercase) and ⓐ ⓑ ⓒ (lowercase)
+- **Squared letters**: 🅰 🅱 🅲 etc.
+- **Special symbols**: © (copyright), ℗ (sound recording copyright)
+- **CJK circled ideographs**: ㊀ ㊁ ㊂ (numbers), ㊊ ㊋ ㊌ (days of week), etc.
+- **Katakana circled characters**: ㋐ ㋑ ㋒ etc.
+- **Regional indicator symbols**: 🇦 🇧 🇨 etc. (used for flag emojis)
+- **Japanese button symbols**: 🈁 🈂 🈚 etc.
+
+## Configuration Options
+
+The transliterator supports the following options:
+
+- **templates**: Customize how circled and squared characters are rendered
+  - **circle**: Template for circled characters (default: "(?)")
+  - **square**: Template for squared characters (default: "[?]")
+- **includeEmojis**: Whether to process emoji characters (default: false)
+
+The "?" in the template is replaced with the actual character content. For example, a circled "A" (Ⓐ) would become "(A)" with the default circle template.
+
+## Character Mapping Table
+
+| Original codepoint | Original character name | Original character | Type | Rendered as | Emoji |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in circledOrSquared -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v.type }} | {{ v.rendering }} | {{ v.emoji }} |
+{% endfor %}

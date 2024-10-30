@@ -1,0 +1,25 @@
+---
+lang: en
+id: cjk-radicals
+url: /transliterators/cjk-radicals/
+title: CJK radicals transliterator
+---
+# CJK radicals transliterator
+
+The CJK radicals transliterator converts Kangxi radical characters and CJK radical supplement characters into their corresponding standard CJK unified ideographs. This is useful for normalizing text that contains standalone radical characters, which are often used in dictionaries and educational materials to represent the building blocks of Chinese characters.
+
+## Overview
+
+This transliterator handles two main sets of radical characters:
+- **Kangxi Radicals** (U+2F00–U+2FD5): The 214 traditional radicals used in Chinese dictionaries
+- **CJK Radicals Supplement** (U+2E80–U+2EF3): Additional radical forms and variants
+
+These radical characters are replaced with their corresponding full CJK characters, ensuring consistent text representation and improving compatibility with systems that may not fully support the specialized radical codepoints.
+
+## Character Mapping Table
+
+| Original codepoint | Original character name | Original character | Substitute codepoint | Substitute character name | Substitute chracter |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in cjkRadicals -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}

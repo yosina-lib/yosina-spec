@@ -1,0 +1,25 @@
+---
+lang: ja
+id: cjk-radicals
+url: /transliterators/cjk-radicals/
+title: CJK部首翻字器
+---
+# CJK部首翻字器
+
+CJK部首翻字器は、康熙部首文字とCJK部首補助文字を対応する標準的なCJK統合漢字に変換します。これは、辞書や教材で漢字の構成要素を表すために使用される独立した部首文字を含むテキストの正規化に有用です。
+
+## 概要
+
+このトランスリテレータは、主に2つの部首文字セットを処理します：
+- **康熙部首** (U+2F00–U+2FD5): 中国の辞書で使用される伝統的な214部首
+- **CJK部首補助** (U+2E80–U+2EF3): 追加の部首形式とバリアント
+
+これらの部首文字は対応する完全なCJK文字に置き換えられ、一貫したテキスト表現を確保し、特殊な部首コードポイントを完全にサポートしていない可能性のあるシステムとの互換性を向上させます。
+
+## 文字マッピング表
+
+| 元のコードポイント | 元の文字名 | 元の文字 | 代替コードポイント | 代替文字名 | 代替文字 |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in cjkRadicals -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}
