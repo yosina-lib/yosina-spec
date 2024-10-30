@@ -1,0 +1,15 @@
+---
+lang: ja
+id: ideographic-annotations
+url: /transliterators/ideographic-annotations/
+title: 表意文字注記トランスリテレータ
+---
+# 表意文字注記トランスリテレータ
+
+表意文字注記は、古代日本で中国語のテキストを読者が素早く読めるようにするために考案されました。通常、元の文字の横に配置され、読む順序を示すことで、読者が日本語で書かれているかのようにテキストを読めるようにします。注記は通常の漢字ですが、対応するCJK表意文字とはUnicodeで異なるコードポイントを持っています。
+
+| 元のコードポイント | 元の文字名 | 元の文字 | 置換後のコードポイント | 置換後の文字名 | 置換後の文字 |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in ideographicAnnotationMarks -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} | {{ unicodeNames.get(v|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ v.replace('+', '')|lower }}.svg) |
+{% endfor %}

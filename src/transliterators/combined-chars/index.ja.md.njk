@@ -1,0 +1,13 @@
+---
+lang: ja
+id: combined-chars
+url: /transliterators/combined-chars/
+title: 合成文字音訳器
+---
+# 合成文字音訳器
+
+| 元のコードポイント | 元の文字名 | 元の文字 | 代替 |
+| --- | --- | --- | --- |
+{% for k, v in combinedChars -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v }} |
+{% endfor %}

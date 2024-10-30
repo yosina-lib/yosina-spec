@@ -1,0 +1,13 @@
+---
+lang: ja
+id: circled-or-squared
+url: /transliterators/circled-or-squared/
+title: 丸囲み・四角囲み文字音訳器
+---
+# 丸囲み・四角囲み文字音訳器
+
+| 元のコードポイント | 元の文字名 | 元の文字 | タイプ | 表示 | 絵文字 |
+| --- | --- | --- | --- | --- | --- |
+{% for k, v in circledOrSquared -%}
+| {{ k }} | {{ unicodeNames.get(k|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ k.replace('+', '')|lower }}.svg) | {{ v.type }} | {{ v.rendering }} | {{ v.emoji }} |
+{% endfor %}

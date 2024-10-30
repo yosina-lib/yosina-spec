@@ -1,0 +1,15 @@
+---
+lang: en
+id: traditional-to-new-kanjis
+url: /transliterators/traditional-to-new-kanjis/
+title: Traditional to new form kanji transliterator
+---
+# Traditional to new form kanji transliterator
+
+This transliterator performs transliteration from traditional form kanjis (旧字体; kyu-ji-tai) to new form kanjis (新字体; shin-ji-tai). The IVD (Ideographic Variation Database) backing the characters with IVS (Ideographic Variation Sequence) or SVS (Standardized Variation Sequence) is Adobe-Japan1.
+
+| Original codepoint (IVS) | Original character name (IVS) | Original character (IVS) | Substitute codepoint | Substitute character name | Substitute chracter |
+| --- | --- | --- | --- | --- | --- |
+{% for pair in traditionalToNewKanjis -%}
+| {{ pair[0].base or (pair[0].ivs|join(' ')) }} | {{ unicodeNames.get((pair[0].base or pair[0].ivs[0])|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ (pair[0].base or pair[0].ivs)|buildFilename }}.svg) | {{ pair[1].base or (pair[1].ivs|join(' ')) }} | {{ unicodeNames.get(pair[1].ivs[0]|decodeCodepoint) }} | ![size=24](/assets/img/genglyphsvg/{{ (pair[1].base or pair[1].ivs)|buildFilename }}.svg) |
+{% endfor %}
