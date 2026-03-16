@@ -1,0 +1,27 @@
+---
+lang: en
+id: small-hirakatas
+url: /transliterators/small-hirakatas/
+title: Small Hiragana/Katakana Transliterator
+---
+# Small Hiragana/Katakana Transliterator
+
+This transliterator converts small (subscript-sized) hiragana and katakana characters into their ordinary-sized equivalents. Small kana are used in Japanese to represent specific phonetic nuances, but for text normalization and search purposes, it is often desirable to map them to their standard counterparts.
+
+## Overview
+
+The transliterator handles small forms across multiple Unicode blocks:
+
+- **Small hiragana** (U+3041, U+3043, U+3045, U+3047, U+3049, U+3063, U+3083, U+3085, U+3087, U+308E, U+3095, U+3096): Small vowels (ぁぃぅぇぉ), small tsu (っ), small ya/yu/yo (ゃゅょ), small wa (ゎ), and small ka/ke (ゕゖ).
+- **Small katakana** (U+30A1, U+30A3, U+30A5, U+30A7, U+30A9, U+30C3, U+30E3, U+30E5, U+30E7, U+30EE, U+30F5, U+30F6): The katakana equivalents of the above.
+- **Small katakana extensions** (U+31F0–U+31FF): Additional small katakana for Ainu language support.
+- **Halfwidth small katakana** (U+FF67–U+FF6F): Halfwidth forms of small katakana.
+- **Kana extended blocks** (U+1B132, U+1B150–U+1B152, U+1B155, U+1B164–U+1B167): Small kana from the Kana Extended-A and Kana Extended-B blocks.
+
+## Character Mapping Table
+
+| Original codepoint | Original glyph | Substitute codepoint | Substitute glyph |
+| --- | --- | --- | --- |
+{% for k, v in smallHirakatas -%}
+| {{ k }} | {{ k|decodeCodepoint|codepointToChar }} | {{ v }} | {{ v|decodeCodepoint|codepointToChar }} |
+{% endfor %}

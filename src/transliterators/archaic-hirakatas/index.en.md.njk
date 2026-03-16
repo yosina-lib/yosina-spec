@@ -1,0 +1,26 @@
+---
+lang: en
+id: archaic-hirakatas
+url: /transliterators/archaic-hirakatas/
+title: Archaic Kana (Hentaigana) Transliterator
+---
+# Archaic Kana (Hentaigana) Transliterator
+
+This transliterator converts archaic kana characters, commonly known as hentaigana (変体仮名), into their modern hiragana or katakana equivalents. Hentaigana are historical variant forms of kana that were derived from different kanji than the standard modern kana. They were widely used until the Japanese script reform of 1900 standardized the kana syllabary.
+
+## Overview
+
+The transliterator handles characters from the following Unicode blocks:
+
+- **Kana Supplement** (U+1B000–U+1B0FF): Contains hentaigana characters derived from various kanji, each mapped to the modern hiragana that represents the same syllable.
+- **Kana Extended-A** (U+1B100–U+1B122): Additional archaic kana forms, including some katakana variants.
+
+These characters were added to Unicode to support the digitization of historical Japanese texts, classical literature, and documents from before the Meiji-era script reforms. For modern text processing and normalization, mapping them to their standard equivalents is essential.
+
+## Character Mapping Table
+
+| Original codepoint | Original glyph | Substitute codepoint | Substitute glyph |
+| --- | --- | --- | --- |
+{% for k, v in archaicHirakatas -%}
+| {{ k }} | ![size=24](/assets/img/genglyphsvg/{{ k|buildFilename }}.svg) | {{ v }} | ![size=24](/assets/img/genglyphsvg/{{ v|buildFilename }}.svg) |
+{% endfor %}

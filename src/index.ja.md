@@ -70,3 +70,6 @@ Yosina仕様の策定には、以下の規格を採用しています。
 * [長音記号トランスリテレータ](/transliterators/prolonged-sound-marks/)
 * [結合文字トランスリテレータ](/transliterators/combined-chars/)
 * [丸囲み・角囲みトランスリテレータ](/transliterators/circled-or-squared/)
+* [歴史的仮名トランスリテレータ](/transliterators/historical-hirakatas/)
+* [小書き仮名トランスリテレータ](/transliterators/small-hirakatas/)
+* [変体仮名トランスリテレータ](/transliterators/archaic-hirakatas/)
