@@ -12,15 +12,15 @@ This transliterator converts historical hiragana and katakana characters into th
 
 The transliterator handles the following categories of historical kana, each controlled by a separate option:
 
-- **Historical hiragana**: ゐ (U+3090) and ゑ (U+3091). Controlled by [`convertHistoricalHiragana`](#converthistoricalhiragana).
-- **Historical katakana**: ヰ (U+30F0) and ヱ (U+30F1). Controlled by [`convertHistoricalKatakana`](#converthistoricalkatakana).
-- **Voiced historical katakana**: ヷ (U+30F7), ヸ (U+30F8), ヹ (U+30F9), and ヺ (U+30FA). These characters do not have single-character counterparts in modern katakana. Controlled by [`convertVoicedHistoricalKana`](#convertvoicedhistoricalkana).
+- **Historical hiragana**: ゐ (U+3090) and ゑ (U+3091). Controlled by [`hiraganas`](#hiraganas).
+- **Historical katakana**: ヰ (U+30F0) and ヱ (U+30F1). Controlled by [`katakanas`](#katakanas).
+- **Voiced historical katakana**: ヷ (U+30F7), ヸ (U+30F8), ヹ (U+30F9), and ヺ (U+30FA). These characters do not have single-character counterparts in modern katakana. Controlled by [`voicedKatakanas`](#voicedkatakanas).
 
 All options are independent and can be combined freely.
 
 ## Options
 
-### `convertHistoricalHiragana`
+### `hiraganas`
 
 Controls how historical hiragana WI (ゐ) and WE (ゑ) are converted. The default is `"simple"`.
 
@@ -35,7 +35,7 @@ Controls how historical hiragana WI (ゐ) and WE (ゑ) are converted. The defaul
 | U+3090 | ゐ | い (U+3044) | うぃ (U+3046 U+3043) |
 | U+3091 | ゑ | え (U+3048) | うぇ (U+3046 U+3047) |
 
-### `convertHistoricalKatakana`
+### `katakanas`
 
 Controls how historical katakana WI (ヰ) and WE (ヱ) are converted. The default is `"simple"`.
 
@@ -50,14 +50,14 @@ Controls how historical katakana WI (ヰ) and WE (ヱ) are converted. The defaul
 | U+30F0 | ヰ | イ (U+30A4) | ウィ (U+30A6 U+30A3) |
 | U+30F1 | ヱ | エ (U+30A8) | ウェ (U+30A6 U+30A7) |
 
-### `convertVoicedHistoricalKana`
+### `voicedKatakanas`
 
 Controls how voiced historical katakana characters (ヷ, ヸ, ヹ, ヺ) are handled. These characters were historically used to represent "va", "vi", "ve", "vo" sounds, but they have no single-character modern katakana equivalents. The default is `"skip"`.
 
 - `"decompose"` — Convert to multi-character representations using ヴ (U+30F4, KATAKANA VU) followed by the appropriate small vowel kana.
 - `"skip"` — Leave these characters as-is without conversion.
 
-#### Mappings when `convertVoicedHistoricalKana` is `"decompose"`
+#### Mappings when `voicedKatakanas` is `"decompose"`
 
 | Original codepoint | Original glyph | Substitute codepoints | Substitute glyphs |
 | --- | --- | --- | --- |
@@ -68,7 +68,7 @@ Controls how voiced historical katakana characters (ヷ, ヸ, ヹ, ヺ) are hand
 
 ## Transformation Examples
 
-The following examples illustrate the behavior under various combinations of options. Unless otherwise specified, options are set to their default values (`convertHistoricalHiragana: "simple"`, `convertHistoricalKatakana: "simple"`, `convertVoicedHistoricalKana: "skip"`).
+The following examples illustrate the behavior under various combinations of options. Unless otherwise specified, options are set to their default values (`hiraganas: "simple"`, `katakanas: "simple"`, `voicedKatakanas: "skip"`).
 
 ### Default behavior (all defaults)
 
@@ -80,7 +80,7 @@ The following examples illustrate the behavior under various combinations of opt
 | `ヱビス` | `エビス` |
 | `ヷイオリン` | `ヷイオリン` (unchanged) |
 
-### With `convertHistoricalHiragana: "decompose"`
+### With `hiraganas: "decompose"`
 
 | Input | Output |
 | --- | --- |
@@ -88,7 +88,7 @@ The following examples illustrate the behavior under various combinations of opt
 | `ゑがく` | `うぇがく` |
 | `ヰスキー` | `イスキー` (katakana unaffected) |
 
-### With `convertHistoricalKatakana: "decompose"`
+### With `katakanas: "decompose"`
 
 | Input | Output |
 | --- | --- |
@@ -96,7 +96,7 @@ The following examples illustrate the behavior under various combinations of opt
 | `ヱビス` | `ウェビス` |
 | `ゐた` | `いた` (hiragana unaffected) |
 
-### With `convertVoicedHistoricalKana: "decompose"`
+### With `voicedKatakanas: "decompose"`
 
 | Input | Output |
 | --- | --- |
@@ -105,7 +105,7 @@ The following examples illustrate the behavior under various combinations of opt
 | `ヹネチア` | `ヴェネチア` |
 | `ヺーカル` | `ヴォーカル` |
 
-### Combined: `convertHistoricalKatakana: "decompose"` and `convertVoicedHistoricalKana: "decompose"`
+### Combined: `katakanas: "decompose"` and `voicedKatakanas: "decompose"`
 
 | Input | Output |
 | --- | --- |
@@ -115,7 +115,7 @@ The following examples illustrate the behavior under various combinations of opt
 
 ### With `"skip"` options
 
-| Input | `convertHistoricalHiragana: "skip"` | `convertHistoricalKatakana: "skip"` |
+| Input | `hiraganas: "skip"` | `katakanas: "skip"` |
 | --- | --- | --- |
 | `ゐた` | `ゐた` (unchanged) | `いた` |
 | `ヰスキー` | `イスキー` | `ヰスキー` (unchanged) |

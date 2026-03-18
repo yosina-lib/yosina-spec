@@ -12,15 +12,15 @@ title: 歴史的仮名トランスリテレータ
 
 このトランスリテレータは以下のカテゴリの歴史的仮名を処理します。各カテゴリはそれぞれ独立したオプションで制御されます：
 
-- **歴史的ひらがな**：ゐ（U+3090）およびゑ（U+3091）。[`convertHistoricalHiragana`](#converthistoricalhiragana)で制御します。
-- **歴史的カタカナ**：ヰ（U+30F0）およびヱ（U+30F1）。[`convertHistoricalKatakana`](#converthistoricalkatakana)で制御します。
-- **歴史的カタカナの濁音形**：ヷ（U+30F7）、ヸ（U+30F8）、ヹ（U+30F9）、ヺ（U+30FA）。これらの文字は現代カタカナに単一文字の対応がありません。[`convertVoicedHistoricalKana`](#convertvoicedhistoricalkana)で制御します。
+- **歴史的ひらがな**：ゐ（U+3090）およびゑ（U+3091）。[`hiraganas`](#hiraganas)で制御します。
+- **歴史的カタカナ**：ヰ（U+30F0）およびヱ（U+30F1）。[`katakanas`](#katakanas)で制御します。
+- **歴史的カタカナの濁音形**：ヷ（U+30F7）、ヸ（U+30F8）、ヹ（U+30F9）、ヺ（U+30FA）。これらの文字は現代カタカナに単一文字の対応がありません。[`voicedKatakanas`](#voicedkatakanas)で制御します。
 
 すべてのオプションは独立しており、自由に組み合わせることができます。
 
 ## オプション
 
-### `convertHistoricalHiragana`
+### `hiraganas`
 
 歴史的ひらがなゐ・ゑの変換方法を制御します。デフォルトは`"simple"`です。
 
@@ -35,7 +35,7 @@ title: 歴史的仮名トランスリテレータ
 | U+3090 | ゐ | い（U+3044） | うぃ（U+3046 U+3043） |
 | U+3091 | ゑ | え（U+3048） | うぇ（U+3046 U+3047） |
 
-### `convertHistoricalKatakana`
+### `katakanas`
 
 歴史的カタカナヰ・ヱの変換方法を制御します。デフォルトは`"simple"`です。
 
@@ -50,14 +50,14 @@ title: 歴史的仮名トランスリテレータ
 | U+30F0 | ヰ | イ（U+30A4） | ウィ（U+30A6 U+30A3） |
 | U+30F1 | ヱ | エ（U+30A8） | ウェ（U+30A6 U+30A7） |
 
-### `convertVoicedHistoricalKana`
+### `voicedKatakanas`
 
 歴史的カタカナの濁音形（ヷ、ヸ、ヹ、ヺ）の処理方法を制御します。これらの文字は歴史的に「ゔぁ」「ゔぃ」「ゔぇ」「ゔぉ」の音を表すために使用されていましたが、現代カタカナには単一文字の対応がありません。デフォルトは`"skip"`です。
 
 - `"decompose"` — ヴ（U+30F4、カタカナ ヴ）に適切な小書き母音カタカナを続ける複数文字表現に変換します。
 - `"skip"` — これらの文字を変換せずそのまま残します。
 
-#### `convertVoicedHistoricalKana`が`"decompose"`の場合のマッピング
+#### `voicedKatakanas`が`"decompose"`の場合のマッピング
 
 | 変換元コードポイント | 変換元グリフ | 変換先コードポイント | 変換先グリフ |
 | --- | --- | --- | --- |
@@ -68,7 +68,7 @@ title: 歴史的仮名トランスリテレータ
 
 ## 変換例
 
-以下の例は、各オプションの組み合わせによる動作を示しています。特に記載がない限り、オプションはデフォルト値（`convertHistoricalHiragana: "simple"`、`convertHistoricalKatakana: "simple"`、`convertVoicedHistoricalKana: "skip"`）です。
+以下の例は、各オプションの組み合わせによる動作を示しています。特に記載がない限り、オプションはデフォルト値（`hiraganas: "simple"`、`katakanas: "simple"`、`voicedKatakanas: "skip"`）です。
 
 ### デフォルト動作（すべてデフォルト値）
 
@@ -80,7 +80,7 @@ title: 歴史的仮名トランスリテレータ
 | `ヱビス` | `エビス` |
 | `ヷイオリン` | `ヷイオリン`（変換なし） |
 
-### `convertHistoricalHiragana: "decompose"`の場合
+### `hiraganas: "decompose"`の場合
 
 | 入力 | 出力 |
 | --- | --- |
@@ -88,7 +88,7 @@ title: 歴史的仮名トランスリテレータ
 | `ゑがく` | `うぇがく` |
 | `ヰスキー` | `イスキー`（カタカナは影響なし） |
 
-### `convertHistoricalKatakana: "decompose"`の場合
+### `katakanas: "decompose"`の場合
 
 | 入力 | 出力 |
 | --- | --- |
@@ -96,7 +96,7 @@ title: 歴史的仮名トランスリテレータ
 | `ヱビス` | `ウェビス` |
 | `ゐた` | `いた`（ひらがなは影響なし） |
 
-### `convertVoicedHistoricalKana: "decompose"`の場合
+### `voicedKatakanas: "decompose"`の場合
 
 | 入力 | 出力 |
 | --- | --- |
@@ -105,7 +105,7 @@ title: 歴史的仮名トランスリテレータ
 | `ヹネチア` | `ヴェネチア` |
 | `ヺーカル` | `ヴォーカル` |
 
-### 組み合わせ：`convertHistoricalKatakana: "decompose"`かつ`convertVoicedHistoricalKana: "decompose"`
+### 組み合わせ：`katakanas: "decompose"`かつ`voicedKatakanas: "decompose"`
 
 | 入力 | 出力 |
 | --- | --- |
@@ -115,7 +115,7 @@ title: 歴史的仮名トランスリテレータ
 
 ### `"skip"`オプションの場合
 
-| 入力 | `convertHistoricalHiragana: "skip"` | `convertHistoricalKatakana: "skip"` |
+| 入力 | `hiraganas: "skip"` | `katakanas: "skip"` |
 | --- | --- | --- |
 | `ゐた` | `ゐた`（変換なし） | `いた` |
 | `ヰスキー` | `イスキー` | `ヰスキー`（変換なし） |
