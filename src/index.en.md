@@ -70,3 +70,6 @@ The following publicly-available datasets are also employed.
 * [Prolonged sound marks transliterator](/en/transliterators/prolonged-sound-marks/)
 * [Combined characters transliterator](/en/transliterators/combined-chars/)
 * [Circled or squared transliterator](/en/transliterators/circled-or-squared/)
+* [Historical hiragana/katakana transliterator](/en/transliterators/historical-hirakatas/)
+* [Small hiragana/katakana transliterator](/en/transliterators/small-hirakatas/)
+* [Archaic kana (hentaigana) transliterator](/en/transliterators/archaic-hirakatas/)

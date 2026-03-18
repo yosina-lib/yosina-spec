@@ -14,6 +14,8 @@ type Dataset = {
   combinedChars: string;
   circledOrSquared: string;
   romanNumerals: string;
+  smallHirakatas: string;
+  archaicHirakatas: string;
 };
 
 const dataset: Dataset = {
@@ -27,6 +29,8 @@ const dataset: Dataset = {
   combinedChars: "./data/combined-chars.json",
   circledOrSquared: "./data/circled-or-squared.json",
   romanNumerals: "./data/roman-numerals.json",
+  smallHirakatas: "./data/small-hirakatas.json",
+  archaicHirakatas: "./data/archaic-hirakatas.json",
 };
 
 type SimpleMappings = Record<string, string>;
@@ -105,6 +109,8 @@ const dataLoaders = (dataset: Dataset) => ({
   _combinedChars: undefined as SimpleMappings | undefined,
   _circledOrSquared: undefined as Record<string, CircledOrSquaredMapping> | undefined,
   _romanNumerals: undefined as RomanNumeralsMapping[] | undefined,
+  _smallHirakatas: undefined as SimpleMappings | undefined,
+  _archaicHirakatas: undefined as SimpleMappings | undefined,
 
   get cjkRadicals() {
     if (this._cjkRadicals === undefined) {
@@ -232,6 +238,22 @@ const dataLoaders = (dataset: Dataset) => ({
     }
     return this._romanNumerals;
   },
+  get smallHirakatas() {
+    if (this._smallHirakatas === undefined) {
+      this._smallHirakatas = JSON.parse(
+        new TextDecoder("utf-8").decode(Deno.readFileSync(dataset.smallHirakatas)),
+      );
+    }
+    return this._smallHirakatas;
+  },
+  get archaicHirakatas() {
+    if (this._archaicHirakatas === undefined) {
+      this._archaicHirakatas = JSON.parse(
+        new TextDecoder("utf-8").decode(Deno.readFileSync(dataset.archaicHirakatas)),
+      );
+    }
+    return this._archaicHirakatas;
+  },
   get unicodeNames(): Map<number, string> {
     return unicodeNames as unknown as Map<number, string>;
   },
@@ -262,6 +284,13 @@ njkEnv.addFilter("codepointsToString", (codepoints: string[]): string => {
     }
     return cp;
   }).join('');
+});
+
+njkEnv.addFilter("codepointToChar", (v: number | undefined): string => {
+  if (v === undefined) {
+    return "";
+  }
+  return String.fromCodePoint(v);
 });
 
 const doIt = () => {
