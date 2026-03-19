@@ -41,6 +41,7 @@ export default lume({
                 "./tmp/NotoSansMath-Regular.ttf",
                 "./tmp/Noto-COLRv1.ttf",
                 "./tmp/NotoSansSymbols2-Regular.ttf",
+                "./tmp/UniHentaiKana-Regular.otf",
               ],
               outDir: "./src/assets/img/genglyphsvg",
               baseUrl: "/assets/img/genglyphsvg",
