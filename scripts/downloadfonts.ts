@@ -10,6 +10,7 @@
  */
 import { Entry } from "lume/core/fs.ts";
 import * as path from "jsr:@std/path";
+import * as url from "jsr:@std/url";
 import { configure, terminateWorkers, ZipReaderStream } from "jsr:@zip-js/zip-js";
 
 type ArtifactDescriptor = {
@@ -22,14 +23,15 @@ const downloadAndExpand = async (
   destDir: string,
   artifact: ArtifactDescriptor,
 ): Promise<void> => {
-  const destPath = path.join(destDir, artifact.filename);
+  const filename = artifact.filename ?? url.basename(artifact.pathInArchive !== undefined ? artifact.pathInArchive : artifact.url);
+  const destPath = path.join(destDir, filename);
   await Deno.mkdir(destDir, { recursive: true });
   
   // Check if file already exists
   try {
     const stat = await Deno.stat(destPath);
     if (stat.isFile && stat.size > 0) {
-      console.log(`Skipping ${artifact.filename} - already exists`);
+      console.log(`Skipping ${filename} - already exists`);
       return;
     }
   } catch {
@@ -53,28 +55,33 @@ const downloadAndExpand = async (
     if (body === null) {
       throw new Error(`Response body is null for ${artifact.url}`);
     }
-    
-    let targetEntry: Entry | undefined = undefined;
-    
-    const zipStream = body.pipeThrough(new ZipReaderStream());
-    
-    for await (const entry of zipStream) {
-      if (entry.filename === artifact.pathInArchive) {
-        console.log(`Extracting ${artifact.pathInArchive} to ${destPath}`);
-        await entry.readable.pipeTo(destFile.writable);
-        console.log(`Done: ${artifact.filename}`);
-        targetEntry = entry;
-        // Don't break - let the stream finish naturally
-      } else {
-        // Consume and discard the data
-        for await (const _ of entry.readable) {
-          // Just consume the data
+
+    if (artifact.pathInArchive === undefined) {
+      await body.pipeTo(destFile.writable);
+      console.log(`Done: ${filename}`);
+    } else {
+      let targetEntry: Entry | undefined = undefined;
+      
+      const zipStream = body.pipeThrough(new ZipReaderStream());
+      
+      for await (const entry of zipStream) {
+        if (entry.filename === artifact.pathInArchive) {
+          console.log(`Extracting ${artifact.pathInArchive} to ${destPath}`);
+          await entry.readable.pipeTo(destFile.writable);
+          console.log(`Done: ${filename}`);
+          targetEntry = entry;
+          // Don't break - let the stream finish naturally
+        } else {
+          // Consume and discard the data
+          for await (const _ of entry.readable) {
+            // Just consume the data
+          }
         }
       }
-    }
-    
-    if (targetEntry === undefined) {
-      throw new Error(`Entry ${artifact.pathInArchive} not found in archive`);
+      
+      if (targetEntry === undefined) {
+        throw new Error(`Entry ${artifact.pathInArchive} not found in archive`);
+      }
     }
   } catch (e) {
     if (e instanceof Error) {
@@ -91,7 +98,7 @@ const downloadAndExpand = async (
   }
   
   if (failed !== undefined) {
-    console.error(`Failed to download ${artifact.filename}: ${failed.message}`);
+    console.error(`Failed to download ${filename}: ${failed.message}`);
     try {
       await Deno.remove(destPath);
     } catch {
@@ -131,6 +138,9 @@ try {
       url: "https://github.com/notofonts/symbols/releases/download/NotoSansSymbols2-v2.008/NotoSansSymbols2-v2.008.zip",
       filename: "NotoSansSymbols2-Regular.ttf",
       pathInArchive: "NotoSansSymbols2/hinted/ttf/NotoSansSymbols2-Regular.ttf",
+    },
+    {
+      url: "https://www.wakufactory.jp/densho/font/hentai/UniHentaiKana-Regular.otf",
     },
   ].map((artifact) => downloadAndExpand(destDir, artifact)));
 } finally {
